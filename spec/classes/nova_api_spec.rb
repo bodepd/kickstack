@@ -16,7 +16,7 @@ describe 'kickstack::nova::api' do
       should contain_data('nova_metadata_ip').with_value(
         '11.0.0.1'
       )
-      should contain_data('quantum_metadata_shared_secret').with_value(
+      should contain_data('metadata_shared_secret').with_value(
         'secret'
       )
       should contain_class('nova::api').with({

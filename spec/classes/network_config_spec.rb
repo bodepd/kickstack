@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'kickstack::quantum::config' do
+describe 'kickstack::network::config' do
 
-  setup_required_hiera_data('quantum')
+  setup_required_hiera_data('network')
 
   describe 'should configure rabbitmq with defaults' do
     let :facts do
@@ -18,7 +18,7 @@ describe 'kickstack::quantum::config' do
       :rabbit_password       => 'rabbit_pass',
       :verbose               => false,
       :debug                 => false,
-      :allow_overlapping_ips => false,
+      :allow_overlapping_ips => true,
       :core_plugin           => 'quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2',
     } ) }
   end
@@ -28,8 +28,8 @@ describe 'kickstack::quantum::config' do
       req_params.merge({
         :rpc_host             => '10.0.0.3',
         :rpc_user             => 'rabbit',
-        :quantum_network_type => 'per-tenant-router',
-        :quantum_plugin       => 'linuxbridge',
+        :network_type         => 'single-flat',
+        :network_plugin       => 'linuxbridge',
         :verbose              => true,
         :debug                => true,
       })
@@ -47,7 +47,7 @@ describe 'kickstack::quantum::config' do
       :rabbit_password       => 'rabbit_pass',
       :verbose               => true,
       :debug                 => true,
-      :allow_overlapping_ips => true,
+      :allow_overlapping_ips => false,
       :core_plugin           => 'quantum.plugins.linuxbridge.lb_quantum_plugin.LinuxBridgePluginV2',
     } ) }
   end
@@ -67,7 +67,7 @@ describe 'kickstack::quantum::config' do
       :qpid_password         => 'rabbit_pass',
       :verbose               => false,
       :debug                 => false,
-      :allow_overlapping_ips => false,
+      :allow_overlapping_ips => true,
       :core_plugin           => 'quantum.plugins.openvswitch.ovs_quantum_plugin.OVSQuantumPluginV2',
     } ) }
   end

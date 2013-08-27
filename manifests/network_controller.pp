@@ -5,14 +5,14 @@
 # This is obviously doing way too much atm
 #
 #
-class kickstack::network_controller {
+class kickstack::network_controller inherits kickstack {
 
-  include kickstack::quantum::config
-  include kickstack::quantum::plugin
-  include kickstack::quantum::server
-  include kickstack::quantum::agent::metadata
-  include kickstack::quantum::agent::l3
-  include kickstack::quantum::agent::dhcp
-  include kickstack::quantum::agent::l2::network
+  include kickstack::network::config
+  include kickstack::network::plugin
+  include kickstack::network::server
+  include kickstack::network::agent::metadata
+  include kickstack::network::agent::l3
+  include kickstack::network::agent::dhcp
+  include kickstack::network::agent::l2::network
 
 }

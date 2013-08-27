@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'kickstack::quantum::agent::dhcp' do
+describe 'kickstack::network::agent::dhcp' do
 
   setup_required_facts
-  setup_required_hiera_data('quantum')
+  setup_required_hiera_data('network')
 
 
   it 'should configure dhcp agent' do
-    should contain_class('kickstack::quantum::config')
+    should contain_class('kickstack::network::config')
     should contain_class('quantum::agents::dhcp').with({
       :debug            => false,
       :interface_driver => 'quantum.agent.linux.interface.OVSInterfaceDriver',
@@ -18,8 +18,8 @@ describe 'kickstack::quantum::agent::dhcp' do
   describe 'when overriding params' do
     let :hiera_data do
       req_params.merge({
-        :quantum_network_type => 'single-flat',
-        :quantum_plugin       => 'linuxbridge',
+        :network_type         => 'single-flat',
+        :network_plugin       => 'linuxbridge',
         :debug                => true,
       })
     end

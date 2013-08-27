@@ -126,6 +126,7 @@ def test_endpoint(type)
   end
 
   describe 'with only required parameters' do
+
     it 'should configure the endpoint and data' do
       should contain_class("#{type}::keystone::auth").with( {
         :password         => "#{type}_service_pass",

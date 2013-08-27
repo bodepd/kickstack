@@ -2,7 +2,6 @@
 # Sets up a nova controller
 #
 class kickstack::nova::controller(
-  $network_type      = hiera('nova_network_type', 'quantum'),
   $volume_on_compute = hiera('volume_on_compute', true),
 ) {
 
@@ -13,7 +12,7 @@ class kickstack::nova::controller(
   include kickstack::nova::cert
   include kickstack::nova::consoleauth
   include kickstack::nova::conductor
-  include kickstack::nova::quantumclient
+  include kickstack::nova::networkclient
   include kickstack::nova::vncproxy
 
 }

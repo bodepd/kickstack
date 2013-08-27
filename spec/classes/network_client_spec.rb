@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'kickstack::quantum::client' do
+describe 'kickstack::network::client' do
 
   test_client('quantum')
 

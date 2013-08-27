@@ -7,7 +7,7 @@ class kickstack::database::databases(
   $enable_keystone = hiera('enable_keystone', true),
   $enable_nova     = hiera('enable_nova', true),
   $enable_swift    = hiera('enable_swift', false),
-  $enable_quantum  = hiera('enable_quantum', true),
+  $enable_network  = hiera('enable_network', true),
 ) {
 
   if $enable_cinder {
@@ -25,8 +25,8 @@ class kickstack::database::databases(
   if $enable_swift {
     include kickstack::swift::db
   }
-  if $enable_quantum {
-    include kickstack::quantum::db
+  if $enable_network {
+    include kickstack::network::db
   }
 
 }

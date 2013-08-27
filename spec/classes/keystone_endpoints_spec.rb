@@ -16,8 +16,8 @@ describe 'kickstack::keystone::endpoints' do
       :glance_public_address     => '127.0.0.1',
       :nova_service_password     => 'nova_service_pass',
       :nova_public_address       => '127.0.0.1',
-      :quantum_service_password  => 'quantum_service_pass',
-      :quantum_public_address    => '127.0.0.1',
+      :network_service_password  => 'network_service_pass',
+      :network_public_address    => '127.0.0.1',
       :swift_service_password    => 'swift_service_pass',
       :swift_public_address      => '127.0.0.1',
       :auth_public_address       => '127.0.0.1',
@@ -31,7 +31,7 @@ describe 'kickstack::keystone::endpoints' do
 
   describe 'with only required parameters' do
     it 'should configure endpoints' do
-      ['cinder', 'glance', 'nova', 'quantum'].each do |x|
+      ['cinder', 'glance', 'nova', 'network'].each do |x|
         should contain_class("kickstack::#{x}::endpoint")
       end
       should_not contain_class('kickstack::swift::endpoint')
@@ -47,7 +47,7 @@ describe 'kickstack::keystone::endpoints' do
     end
   end
 
-  ['cinder', 'glance', 'nova', 'quantum'].each do |y|
+  ['cinder', 'glance', 'nova', 'network'].each do |y|
     describe "when disabling #{y}" do
       let :hiera_data do
         req_params.merge("enable_#{y}" => false)

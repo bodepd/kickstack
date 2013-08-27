@@ -1,8 +1,8 @@
 #
-class kickstack::quantum::plugin(
-  $db_password         = hiera('quantum_db_password'),
-  $db_user             = hiera('quantum_db_user', 'quantum'),
-  $db_name             = hiera('quantum_db_name', 'quantum'),
+class kickstack::network::plugin(
+  $db_password         = hiera('network_db_password'),
+  $db_user             = hiera('network_db_user', 'network'),
+  $db_name             = hiera('network_db_name', 'network'),
   $db_host             = hiera('db_host', '127.0.0.1'),
   $db_type             = hiera('db_type', $::kickstack::db_type),
   $tenant_network_type = hiera('tenant_network_type', 'gre'),
@@ -12,7 +12,7 @@ class kickstack::quantum::plugin(
   $plugin              = hiera('network_plugin', 'ovs'),
 ) inherits kickstack {
 
-  include kickstack::quantum::config
+  include kickstack::network::config
 
   $sql_connection_string = "${db_type}://${db_user}:${db_password}@${db_host}/${db_name}"
 
@@ -22,7 +22,7 @@ class kickstack::quantum::plugin(
 
   case $plugin {
     'ovs': {
-      class { 'quantum::plugins::ovs':
+      class { "${::kickstack::service}::plugins::ovs":
         sql_connection      => $sql_connection_string,
         tenant_network_type => $tenant_network_type,
         #network_vlan_ranges => $vlan_ranges,
@@ -36,14 +36,14 @@ class kickstack::quantum::plugin(
       #}
     }
     'linuxbridge': {
-      class { 'quantum::plugins::linuxbridge':
+      class { "${::kickstack::network_service}::plugins::linuxbridge":
         sql_connection      => $sql_connection_string,
         tenant_network_type => $tenant_network_type,
         network_vlan_ranges => $vlan_ranges,
       }
     }
     default: {
-      fail("Unsupported quantum plugin: ${plugin}")
+      fail("Unsupported network plugin: ${plugin}")
     }
   }
 }

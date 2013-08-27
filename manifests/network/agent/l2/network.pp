@@ -1,17 +1,17 @@
 #
-class kickstack::quantum::agent::l2::network(
+class kickstack::network::agent::l2::network(
   $tenant_network_type = hiera('tenant_network_type', 'gre'),
-  $network_type        = hiera('network_type', 'ovs', 'single-flat'),
+  $network_type        = hiera('network_type', 'ovs', 'per-tenant-router'),
   $plugin              = hiera('network_plugin', 'ovs'),
   $data_nic            = hiera('data_nic'),
   $external_nic        = hiera('external_nic'),
-  $physnet             = hiera('quantum_physnet', 'default'),
+  $physnet             = hiera('network_physnet', 'default'),
   $integration_bridge  = hiera('intergration_bridge', 'br-int'),
-  $external_bridge     = hiera('quantum_external_bridge', 'br-ex'),
-  $tunnel_bridge       = hiera('quantum_tunnel_bridge', 'br-tun'),
+  $external_bridge     = hiera('network_external_bridge', 'br-ex'),
+  $tunnel_bridge       = hiera('network_tunnel_bridge', 'br-tun'),
 ) inherits kickstack {
 
-  include kickstack::quantum::config
+  include kickstack::network::config
 
   case $plugin {
     'ovs': {
@@ -20,11 +20,11 @@ class kickstack::quantum::agent::l2::network(
           $local_tunnel_ip = get_ip_from_nic($data_nic)
           $bridge_uplinks = ["${external_bridge}:${external_nic}"]
 
-          # The quantum module creates bridge_uplinks only when
+          # The network module creates bridge_uplinks only when
           # bridge_mappings is non-empty. That's bogus for GRE
           # configurations, so create the uplink anyway.
-          #::quantum::plugins::ovs::port { $bridge_uplinks: }
-          class { 'quantum::agents::ovs':
+          #::network::plugins::ovs::port { $bridge_uplinks: }
+          class { "::${::kickstack::network_service}::agents::ovs":
             bridge_uplinks     => $bridge_uplinks,
             bridge_mappings    => ["${physnet}:${external_bridge}"],
             integration_bridge => $integration_bridge,
@@ -39,7 +39,7 @@ class kickstack::quantum::agent::l2::network(
           unless $network_type == 'single-flat' {
             $bridge_uplinks += ["${external_bridge}:${external_nic}"]
           }
-          class { 'quantum::agents::ovs':
+          class { "::${::kickstack::network_service}::agents::ovs":
             bridge_mappings    => ["${physnet}:br-${data_nic}"],
             bridge_uplinks     => $bridge_uplinks,
             integration_bridge => $integration_bridge,
@@ -50,7 +50,7 @@ class kickstack::quantum::agent::l2::network(
       }
     }
     'linuxbridge': {
-      class { 'quantum::agents::linuxbridge':
+      class { "::${::kickstack::network_service}::agents::linuxbridge":
         physical_interface_mappings => "default:${data_nic}"
       }
     }

@@ -7,20 +7,16 @@
 #
 class kickstack::compute(
   $volume_on_compute = hiera('volume_on_compute', true),
-  $network_type      = hiera('network_type', $::kickstack::network_type),
 ) inherits kickstack {
 
   include kickstack::nova::config
   include kickstack::nova::compute
 
-  if $network_type == 'quantum' {
-    # should this not be in the nova::compute class
-    include kickstack::quantum::config
-    include kickstack::nova::quantumclient
-    include kickstack::quantum::agent::l2::compute
-  } else {
-    fail("Unsupported network type ${network_type}")
-  }
+  # should this not be in the nova::compute class
+  include kickstack::network::config
+  include kickstack::nova::networkclient
+  include kickstack::network::agent::l2::compute
+
   if $volume_on_compute {
     include kickstack::cinder::volume
     # TODO - don't have this here...

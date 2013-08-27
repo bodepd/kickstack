@@ -1,21 +1,21 @@
 #
-class kickstack::quantum::agent::l3(
-  $network_type       = hiera('quantum_network_type', 'per-tenant-router'),
-  $plugin             = hiera('quantum_plugin', 'ovs'),
-  $external_bridge    = hiera('quantum_external_bridge', 'br-ex'),
-#  $router_id          = hiera('quantum_router_id', undef),
-#  $gateway_ext_net_id = hiera('quantum_gw_ext_net_id', undef),
+class kickstack::network::agent::l3(
+  $network_type       = hiera('network_type', 'per-tenant-router'),
+  $plugin             = hiera('network_plugin', 'ovs'),
+  $external_bridge    = hiera('network_external_bridge', 'br-ex'),
+#  $router_id          = hiera('network_router_id', undef),
+#  $gateway_ext_net_id = hiera('network_gw_ext_net_id', undef),
 ) inherits kickstack {
 
-  include kickstack::quantum::config
+  include kickstack::network::config
 
   #vs_bridge { $external_bridge:
   #  ensure => present,
   #}
 
   $interface_driver = $plugin ? {
-    'ovs'         => 'quantum.agent.linux.interface.OVSInterfaceDriver',
-    'linuxbridge' => 'quantum.agent.linux.interface.BridgeInterfaceDriver'
+    'ovs'         => "${::kickstack::network_service}.agent.linux.interface.OVSInterfaceDriver",
+    'linuxbridge' => "${::kickstack::network_service}.agent.linux.interface.BridgeInterfaceDriver"
   }
   $use_namespaces = $network_type ? {
     'per-tenant-router' => true,
@@ -32,7 +32,7 @@ class kickstack::quantum::agent::l3(
   $router_id = undef
   $gateway_external_network_id = undef
 
-  class { '::quantum::agents::l3':
+  class { "::${::kickstack::network_service}::agents::l3":
     debug                       => $::kickstack::debug,
     interface_driver            => $interface_driver,
     external_network_bridge     => $external_bridge,
@@ -40,7 +40,7 @@ class kickstack::quantum::agent::l3(
     router_id                   => $router_id,
     gateway_external_network_id => $gateway_external_network_id,
     require                     => Class[
-      'kickstack::quantum::agent::metadata',
+      "kickstack::${::kickstack::network_service}::agent::metadata",
       'vswitch::ovs'
     ]
   }

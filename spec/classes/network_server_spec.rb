@@ -1,19 +1,19 @@
 require 'spec_helper'
 
-describe 'kickstack::quantum::server' do
+describe 'kickstack::network::server' do
 
   setup_required_facts
-  setup_required_hiera_data('quantum')
+  setup_required_hiera_data('network')
 
-  it 'should configure quantum' do
-    should contain_class('kickstack::quantum::config')
+  it 'should configure network' do
+    should contain_class('kickstack::network::config')
     should contain_class('quantum::server').with({
       :auth_tenant   => 'services',
-      :auth_user     => 'quantum',
-      :auth_password => 'quantum_service_pass',
+      :auth_user     => 'network',
+      :auth_password => 'network_service_pass',
       :auth_host     => '127.0.0.1',
     })
-    should contain_data('quantum_host').with_value(
+    should contain_data('network_host').with_value(
       '11.0.0.1'
     )
   end
@@ -25,14 +25,14 @@ describe 'kickstack::quantum::server' do
         {
           :keystone_internal_address => '10.0.0.1',
           :service_tenant            => 'ten10',
-          :quantum_service_user              => 'bob',
+          :network_service_user              => 'bob',
         })
     end
-    it 'should configure quantum' do
+    it 'should configure network' do
       should contain_class('quantum::server').with({
         :auth_tenant   => 'ten10',
         :auth_user     => 'bob',
-        :auth_password => 'quantum_service_pass',
+        :auth_password => 'network_service_pass',
         :auth_host     => '10.0.0.1',
       })
     end

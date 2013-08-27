@@ -6,7 +6,7 @@
 #
 class kickstack (
   $package_ensure       = hiera('package_ensure', 'present'),
-  $name_resolution      = hiera('name_resolution', 'hosts'),
+  $name_resolution      = hiera('name_resolution', false),
   $verbose              = hiera('verbose', false),
   $debug                = hiera('debug', false),
 
@@ -24,7 +24,7 @@ class kickstack (
   $glance_backend       = hiera('glance_backend', 'file'),
   $nova_compute_type    = hiera('compute_type', 'libvirt'),
   # supports quantum and nova network
-  $network_type         = hiera('network_type', 'quantum'),
+  $network_service      = hiera('network_service', 'quantum'),
   $management_nic       = hiera('management_nic', 'eth2'),
 ) inherits kickstack::params {
 

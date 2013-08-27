@@ -7,7 +7,7 @@ class kickstack::keystone::endpoints(
   $enable_glance   = hiera('enable_glance', true),
   $enable_keystone = hiera('enable_keystone', true),
   $enable_nova     = hiera('enable_nova', true),
-  $enable_quantum  = hiera('enable_quantum', true),
+  $enable_network  = hiera('enable_network', true),
   $enable_swift    = hiera('enable_swift', false),
 ) {
 
@@ -26,8 +26,8 @@ class kickstack::keystone::endpoints(
   if $enable_swift {
     include kickstack::swift::endpoint
   }
-  if $enable_quantum {
-    include kickstack::quantum::endpoint
+  if $enable_network {
+    include kickstack::network::endpoint
   }
 
 }
