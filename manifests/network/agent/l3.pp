@@ -40,7 +40,7 @@ class kickstack::network::agent::l3(
     router_id                   => $router_id,
     gateway_external_network_id => $gateway_external_network_id,
     require                     => Class[
-      "kickstack::${::kickstack::network_service}::agent::metadata",
+      "kickstack::network::agent::metadata",
       'vswitch::ovs'
     ]
   }
