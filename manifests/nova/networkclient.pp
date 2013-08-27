@@ -9,7 +9,7 @@ class kickstack::nova::networkclient(
   include kickstack::nova::config
 
   if $::kickstack::network_service == 'quantum' {
-    class { '::nova::network::network':
+    class { '::nova::network::quantum':
       quantum_admin_password    => $network_auth_password,
       quantum_auth_strategy     => 'keystone',
       quantum_url               => "http://${network_host}:9696",
@@ -20,7 +20,7 @@ class kickstack::nova::networkclient(
       security_group_api        => 'quantum',
     }
   } elsif $::kickstack::network_service == 'neutron' {
-    class { '::nova::network::network':
+    class { '::nova::network::neutron':
       neutron_admin_password    => $network_auth_password,
       neutron_auth_strategy     => 'keystone',
       neutron_url               => "http://${network_host}:9696",

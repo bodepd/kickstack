@@ -22,7 +22,7 @@ class kickstack::network::plugin(
 
   case $plugin {
     'ovs': {
-      class { "${::kickstack::service}::plugins::ovs":
+      class { "${::kickstack::network_service}::plugins::ovs":
         sql_connection      => $sql_connection_string,
         tenant_network_type => $tenant_network_type,
         #network_vlan_ranges => $vlan_ranges,
