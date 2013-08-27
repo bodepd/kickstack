@@ -2,7 +2,7 @@
 class kickstack::nova::networkclient(
   $auth_host             = hiera('auth_internal_address', '127.0.0.1'),
   $network_auth_password = hiera('network_service_password'),
-  $network_auth_username = hiera('network_service_username', 'network'),
+  $network_auth_username = hiera('network_service_username', $::kickstack::network_service),
   $network_host          = hiera('network_internal_address', '127.0.0.1'),
 ) inherits kickstack {
 

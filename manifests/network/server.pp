@@ -1,7 +1,7 @@
 #
 class kickstack::network::server(
   $service_password = hiera('network_service_password'),
-  $service_user     = hiera('network_service_user', 'network'),
+  $service_user     = hiera('network_service_user', $::kickstack::network_service),
   $auth_host        = hiera('keystone_internal_address', '127.0.0.1'),
   $management_nic   = hiera('management_nic', $::kickstack::management_nic),
   $service_tenant   = hiera('service_tenant', $::kickstack::auth_service_tenant),

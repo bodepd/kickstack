@@ -1,8 +1,8 @@
 #
 class kickstack::network::db(
   $password      = hiera('network_db_password'),
-  $user          = hiera('network_db_user', 'network'),
-  $db_name       = hiera('network_db_name', 'network'),
+  $user          = hiera('network_db_user', $kickstack::network_service),
+  $db_name       = hiera('network_db_name', $kickstack::network_service),
   $host          = hiera('db_host', '127.0.0.1'),
   $allowed_hosts = hiera('db_allowed_hosts', false),
   $type          = hiera('db_type', $::kickstack::db_type)
