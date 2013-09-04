@@ -4,7 +4,7 @@
 #
 class kickstack::cinder::volume() {
 
-  include ::cinder::config
+  include ::cinder
   include ::cinder::volume
 
   include "::cinder::volume::${::cinder_backend}"
