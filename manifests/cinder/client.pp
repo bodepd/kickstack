@@ -1,6 +1,6 @@
 # installs cinder client
 class kickstack::cinder::client {
 
-  kickstack::client { 'cinder': }
+  include ::cinder::client
 
 }

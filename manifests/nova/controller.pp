@@ -1,9 +1,7 @@
 #
 # Sets up a nova controller
 #
-class kickstack::nova::controller(
-  $volume_on_compute = hiera('volume_on_compute', true),
-) {
+class kickstack::nova::controller {
 
   include kickstack::nova::config
   include kickstack::nova::api

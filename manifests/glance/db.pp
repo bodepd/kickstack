@@ -1,6 +1,6 @@
 #
-class kickstack::glance::db inherits kickstack {
+class kickstack::glance::db {
 
-  kickstack::db { 'glance': }
+  include "::glance::db::${::db_type}"
 
 }

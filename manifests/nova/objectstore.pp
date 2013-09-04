@@ -1,8 +1,7 @@
 #
-class kickstack::nova::objectstore inherits kickstack {
+class kickstack::nova::objectstore {
 
-  include kickstack::nova::config
-
-  kickstack::nova::service { 'objectstore': }
+  include ::nova
+  include ::nova::objectstore
 
 }

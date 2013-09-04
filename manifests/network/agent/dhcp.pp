@@ -2,7 +2,6 @@
 class kickstack::network::agent::dhcp(
   $network_type = hiera('network_type', 'per-tenant-router'),
   $plugin       = hiera('network_plugin', 'ovs'),
-  $debug        = hiera('debug', $::kickstack::debug)
 ) inherits kickstack {
 
   include kickstack::network::config
@@ -18,7 +17,6 @@ class kickstack::network::agent::dhcp(
   }
 
   class { "::${::kickstack::network_service}::agents::dhcp":
-    debug            => $debug,
     interface_driver => $interface_driver,
     use_namespaces   => $use_namespaces,
   }

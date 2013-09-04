@@ -1,6 +1,6 @@
 #
 class kickstack::nova::endpoint {
 
-  kickstack::endpoint { 'nova': }
+  include ::nova::keystone::auth
 
 }

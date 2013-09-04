@@ -1,6 +1,6 @@
 #
 class kickstack::glance::client {
 
-  kickstack::client { 'glance': }
+  include ::glance::client
 
 }

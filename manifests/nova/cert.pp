@@ -1,8 +1,7 @@
 #
 class kickstack::nova::cert inherits kickstack {
 
-  include kickstack::nova::config
-
-  kickstack::nova::service { 'cert': }
+  include ::nova
+  include ::nova::cert
 
 }

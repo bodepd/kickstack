@@ -2,31 +2,24 @@
 #
 # Configures endpoints
 #
-class kickstack::keystone::endpoints(
-  $enable_cinder   = hiera('enable_cinder', true),
-  $enable_glance   = hiera('enable_glance', true),
-  $enable_keystone = hiera('enable_keystone', true),
-  $enable_nova     = hiera('enable_nova', true),
-  $enable_network  = hiera('enable_network', true),
-  $enable_swift    = hiera('enable_swift', false),
-) {
+class kickstack::keystone::endpoints {
 
-  if $enable_cinder {
+  if member($::enabled_services, 'cinder') {
     include kickstack::cinder::endpoint
   }
-  if $enable_glance {
+  if member($::enabled_services, 'glance') {
     include kickstack::glance::endpoint
   }
-  if $enable_keystone {
+  if member($::enabled_services, 'keystone') {
     include kickstack::keystone::endpoint
   }
-  if $enable_nova {
+  if member($::enabled_services, 'nova') {
     include kickstack::nova::endpoint
   }
-  if $enable_swift {
+  if member($::enabled_services, 'swift') {
     include kickstack::swift::endpoint
   }
-  if $enable_network {
+  if member($::enabled_services, 'network') {
     include kickstack::network::endpoint
   }
 

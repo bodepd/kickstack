@@ -1,6 +1,6 @@
 #
 class kickstack::keystone::client {
 
-  kickstack::client { 'keystone': }
+  include ::keystone::client
 
 }

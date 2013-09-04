@@ -1,6 +1,6 @@
 #
 class kickstack::swift::endpoint {
 
-  kickstack::endpoint { 'swift': }
+  include ::swift::keystone::auth
 
 }

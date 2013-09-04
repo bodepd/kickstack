@@ -1,6 +1,6 @@
 #
-class kickstack::keystone::db inherits kickstack {
+class kickstack::keystone::db {
 
-  kickstack::db { 'keystone': }
+  include "::keystone::db::${::db_type}"
 
 }

@@ -1,6 +1,6 @@
 #
-class kickstack::network::client inherits kickstack {
+class kickstack::network::client {
 
-  kickstack::client { $::kickstack::network_service: }
+  include "${::network_service}::client"
 
 }

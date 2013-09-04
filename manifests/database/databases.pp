@@ -1,31 +1,26 @@
 #
+#
+# TODO - I have no idea what to do here
+#
 # class used to configured databases
 #
-class kickstack::database::databases(
-  $enable_cinder   = hiera('enable_cinder', true),
-  $enable_glance   = hiera('enable_glance', true),
-  $enable_keystone = hiera('enable_keystone', true),
-  $enable_nova     = hiera('enable_nova', true),
-  $enable_swift    = hiera('enable_swift', false),
-  $enable_network  = hiera('enable_network', true),
-) {
-
-  if $enable_cinder {
+class kickstack::database::databases() {
+  if member($::enabled_services, 'cinder') {
     include kickstack::cinder::db
   }
-  if $enable_glance {
+  if member($::enabled_services, 'glance') {
     include kickstack::glance::db
   }
-  if $enable_keystone {
+  if member($::enabled_services, 'keystone') {
     include kickstack::keystone::db
   }
-  if $enable_nova {
+  if member($::enabled_services, 'nova') {
     include kickstack::nova::db
   }
-  if $enable_swift {
+  if member($::enabled_services, 'swift') {
     include kickstack::swift::db
   }
-  if $enable_network {
+  if member($::enabled_services, 'network') {
     include kickstack::network::db
   }
 

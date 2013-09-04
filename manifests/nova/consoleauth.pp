@@ -1,8 +1,7 @@
 #
-class kickstack::nova::consoleauth inherits kickstack {
+class kickstack::nova::consoleauth {
 
-  include kickstack::nova::config
-
-  kickstack::nova::service { 'consoleauth': }
+  include ::nova
+  include ::nova::consoleauth
 
 }

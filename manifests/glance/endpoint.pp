@@ -1,6 +1,6 @@
 #
 class kickstack::glance::endpoint {
 
-  kickstack::endpoint { 'glance': }
+  include ::glance::keystone::auth
 
 }

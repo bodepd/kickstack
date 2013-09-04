@@ -1,6 +1,6 @@
 #
 class kickstack::nova::client {
 
-  kickstack::client { 'nova': }
+  include ::nova::client
 
 }

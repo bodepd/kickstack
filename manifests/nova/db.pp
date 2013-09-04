@@ -1,6 +1,6 @@
 #
-class kickstack::nova::db inherits kickstack {
+class kickstack::nova::db {
 
-  kickstack::db { 'nova': }
+  include "::nova::db::${::db_type}"
 
 }
