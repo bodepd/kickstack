@@ -5,9 +5,7 @@
 # I am considering dropping support for nova-networks
 #
 #
-class kickstack::compute(
-  $volume_on_compute = hiera('volume_on_compute', true),
-) inherits kickstack {
+class kickstack::compute {
 
   include kickstack::nova::config
   include kickstack::nova::compute
@@ -16,13 +14,9 @@ class kickstack::compute(
   include kickstack::network::config
   include kickstack::nova::networkclient
   include kickstack::network::agent::l2::compute
+  include kickstack::cinder::volume
 
-  if $volume_on_compute {
-    include kickstack::cinder::volume
-    # TODO - don't have this here...
-    # set in nova::api
-    if ! defined(Nova_config['DEFAULT/volume_api_class']) {
-      nova_config { 'DEFAULT/volume_api_class': value => 'nova.volume.cinder.API' }
-    }
+  if ! defined(Nova_config['DEFAULT/volume_api_class']) {
+    nova_config { 'DEFAULT/volume_api_class': value => 'nova.volume.cinder.API' }
   }
 }
