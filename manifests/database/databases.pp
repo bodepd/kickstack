@@ -1,4 +1,4 @@
-#
+
 #
 # TODO - I have no idea what to do here
 #
@@ -6,22 +6,22 @@
 #
 class kickstack::database::databases() {
   if member($::enabled_services, 'cinder') {
-    include kickstack::cinder::db
+    include "::cinder::db::${::db_type}"
   }
   if member($::enabled_services, 'glance') {
-    include kickstack::glance::db
+    include "::glance::db::${::db_type}"
   }
   if member($::enabled_services, 'keystone') {
-    include kickstack::keystone::db
+    include "::keystone::db::${::db_type}"
   }
   if member($::enabled_services, 'nova') {
-    include kickstack::nova::db
+    include "::nova::db::${::db_type}"
   }
   if member($::enabled_services, 'swift') {
-    include kickstack::swift::db
+    include "::swift::db::${::db_type}"
   }
   if member($::enabled_services, 'network') {
-    include kickstack::network::db
+    include "::${network_service}::db::${::db_type}"
   }
 
 }

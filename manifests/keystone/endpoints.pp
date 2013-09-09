@@ -5,22 +5,23 @@
 class kickstack::keystone::endpoints {
 
   if member($::enabled_services, 'cinder') {
-    include kickstack::cinder::endpoint
+    include cinder::keystone::auth
   }
   if member($::enabled_services, 'glance') {
-    include kickstack::glance::endpoint
+    include ::glance::keystone::auth
   }
   if member($::enabled_services, 'keystone') {
-    include kickstack::keystone::endpoint
+    include ::keystone::endpoint
+    include ::keystone::roles::admin
   }
   if member($::enabled_services, 'nova') {
-    include kickstack::nova::endpoint
+    include ::nova::keystone::auth
   }
   if member($::enabled_services, 'swift') {
-    include kickstack::swift::endpoint
+    include ::swift::keystone::auth
   }
   if member($::enabled_services, 'network') {
-    include kickstack::network::endpoint
+    include "::${::network_service}::keystone::auth"
   }
 
 }
