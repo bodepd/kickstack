@@ -17,9 +17,6 @@ class kickstack::database::databases() {
   if member($::enabled_services, 'nova') {
     include "::nova::db::${::db_type}"
   }
-  if member($::enabled_services, 'swift') {
-    include "::swift::db::${::db_type}"
-  }
   if member($::enabled_services, 'network') {
     include "::${network_service}::db::${::db_type}"
   }
